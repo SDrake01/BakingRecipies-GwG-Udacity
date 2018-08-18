@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Baking Recipies</string>
+    <string name="ingredients_title">Ingredients</string>
+    <string name="steps_title">Instructions</string>
+    <string name="recipe_name">Recipe Name</string>
+    <string name="recipe_quantity">Quantity</string>
+    <string name="recipe_measure">Measure</string>
+    <string name="recipe_ingredient">Ingredient</string>
+    <string name="step_number">Step </string>
+    <string name="step_short_desc">Short Description</string>
+    <string name="step_description">Description</string>
+    <string name="prev_step">Prev Step</string>
+    <string name="next_step">Next Step</string>
+    <string name="json_url">https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json</string>
+
 </resources>
