@@ -13,8 +13,7 @@
         android:id="@+id/cl_recipe_name_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        android:background="@color/colorAccent">
+        android:layout_margin="4dp">
 
         <TextView
             android:id="@+id/tv_recipe_name_text"

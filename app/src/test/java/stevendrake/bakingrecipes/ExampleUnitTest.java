@@ -1,4 +1,4 @@
-package stevendrake.bakingrecipies;
+package stevendrake.bakingrecipes;
 
 import org.junit.Test;
 

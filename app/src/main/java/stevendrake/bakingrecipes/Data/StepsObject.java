@@ -1,4 +1,4 @@
-package stevendrake.bakingrecipies.Data;
+package stevendrake.bakingrecipes.Data;
 
 public class StepsObject {
 
