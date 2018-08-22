@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import stevendrake.bakingrecipes.Data.RecipeObject;
-import stevendrake.bakingrecipes.UI.MainActivity;
+import stevendrake.bakingrecipes.UI.MainFragment;
 
 public class ParseRecipeJson {
 
@@ -30,6 +30,6 @@ public class ParseRecipeJson {
                 j.printStackTrace();
             }
         }
-        MainActivity.recipeGridAdapter.setRecipes(recipeList);
+        MainFragment.recipeGridAdapter.setRecipes(recipeList);
     }
 }
