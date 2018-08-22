@@ -2,12 +2,12 @@ package stevendrake.bakingrecipes.Data;
 
 public class RecipeObject {
 
-    private static String id;
-    private static String name;
-    private static String ingredients;
-    private static String steps;
-    private static String servings;
-    private static String image;
+    private String id;
+    private String name;
+    private String ingredients;
+    private String steps;
+    private String servings;
+    private String image;
 
     public void setId(String newId){id = newId;}
     public void setName(String newName){name = newName;}

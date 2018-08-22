@@ -6,7 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -16,7 +19,7 @@ import stevendrake.bakingrecipes.R;
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder> {
 
     private Context context;
-    private List<RecipeObject> recipeObjectList;
+    public static List<RecipeObject> recipeObjectList;
 
     public RecipesAdapter(Context context){
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -56,13 +59,15 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVi
 
     class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        final TextView recipeNameView;
+        final TextView recipeCardName;
+        final ImageView recipeCardImage;
         final Context context;
 
         public RecipeViewHolder(Context context, View itemView) {
             super(itemView);
 
-            recipeNameView = itemView.findViewById(R.id.tv_recipe_name_text);
+            recipeCardName = itemView.findViewById(R.id.tv_recipe_card_name);
+            recipeCardImage = itemView.findViewById(R.id.iv_recipe_card_image);
 
             this.context = context;
         }
@@ -73,7 +78,16 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVi
         }
 
         void bind(int position){
-            recipeNameView.setText(recipeObjectList.get(position).getIngredients());
+            recipeCardName.setText(recipeObjectList.get(position).getName());
+            if (recipeObjectList.get(position).getImage().trim().length() == 0){
+                Picasso.with(itemView.getContext())
+                        .load(R.mipmap.ic_launcher)
+                        .into(recipeCardImage);
+            } else {
+                Picasso.with(itemView.getContext())
+                        .load(recipeObjectList.get(position).getImage())
+                        .into(recipeCardImage);
+            }
         }
     }
 }
