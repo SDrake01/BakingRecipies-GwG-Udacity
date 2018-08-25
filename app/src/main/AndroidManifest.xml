@@ -21,6 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".UI.RecipeActivity"
+            android:parentActivityName=".UI.MainActivity"
+            android:label="@string/recipe_title"/>
+
     </application>
 
 </manifest>
