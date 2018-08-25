@@ -12,9 +12,8 @@ import android.widget.TextView;
 import org.json.JSONException;
 
 import stevendrake.bakingrecipes.Adapters.IngredientAdapter;
-import stevendrake.bakingrecipes.Data.IngredientObject;
 import stevendrake.bakingrecipes.R;
-import stevendrake.bakingrecipes.Utilities.ParseIngredientsJson;
+import stevendrake.bakingrecipes.ViewModels.RecipeViewModel;
 
 public class RecipeFragment extends Fragment{
 
@@ -42,9 +41,9 @@ public class RecipeFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
         try {
-            ParseIngredientsJson.getIngredientData(IngredientObject.getIngredientString());
-        }catch (JSONException j){
-            j.printStackTrace();
+            ingredientAdapter.setIngredients(RecipeViewModel.getViewIngredientList());
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         ingredientsListTitle.setOnClickListener(new View.OnClickListener() {

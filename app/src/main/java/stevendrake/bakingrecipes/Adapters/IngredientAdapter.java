@@ -15,7 +15,7 @@ import stevendrake.bakingrecipes.R;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
 
-    public static List<IngredientObject> ingredientObjectList;
+    public List<IngredientObject> ingredientObjectList;
 
     public IngredientAdapter(Context context){
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -41,6 +41,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     public void setIngredients(List<IngredientObject> newIngredientList){
         ingredientObjectList = newIngredientList;
         notifyDataSetChanged();
+
     }
 
     public int getItemCount(){

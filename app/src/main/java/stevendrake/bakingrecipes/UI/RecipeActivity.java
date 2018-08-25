@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import stevendrake.bakingrecipes.R;
+import stevendrake.bakingrecipes.ViewModels.RecipeViewModel;
 
 public class RecipeActivity extends AppCompatActivity {
 
     FragmentManager recipeFragmentManager = getFragmentManager();
+    private RecipeViewModel recipeViewModel;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

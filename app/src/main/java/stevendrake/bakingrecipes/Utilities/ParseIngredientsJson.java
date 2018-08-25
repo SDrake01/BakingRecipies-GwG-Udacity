@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import stevendrake.bakingrecipes.Data.IngredientObject;
-import stevendrake.bakingrecipes.UI.RecipeFragment;
+import stevendrake.bakingrecipes.ViewModels.RecipeViewModel;
 
 public class ParseIngredientsJson {
 
@@ -30,6 +30,6 @@ public class ParseIngredientsJson {
                 j.printStackTrace();
             }
         }
-        RecipeFragment.ingredientAdapter.setIngredients(ingredientList);
+        RecipeViewModel.setViewIngredientList(ingredientList);
     }
 }

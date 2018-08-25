@@ -1,6 +1,6 @@
 package stevendrake.bakingrecipes.Data;
 
-public class StepsObject {
+public class StepObject {
 
     private static int id;
     private static String shortDesc;

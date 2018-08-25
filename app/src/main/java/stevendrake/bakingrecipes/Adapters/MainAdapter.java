@@ -84,7 +84,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.RecipeViewHold
             if (position != RecyclerView.NO_POSITION){
                 Context context = v.getContext();
                 Intent recipeIntent = new Intent(context, RecipeActivity.class);
-                //recipeIntent.putExtra("ingredients", recipeObjectList.get(position).getIngredients());
                 IngredientObject.setIngredientString(recipeObjectList.get(position).getIngredients());
                 context.startActivity(recipeIntent);
             }
