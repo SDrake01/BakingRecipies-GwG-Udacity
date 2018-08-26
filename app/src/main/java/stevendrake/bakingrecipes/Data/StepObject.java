@@ -2,22 +2,25 @@ package stevendrake.bakingrecipes.Data;
 
 public class StepObject {
 
-    private static int id;
-    private static String shortDesc;
-    private static String description;
-    private static String videoUrl;
-    private static String thumbUrl;
+    private String id;
+    private String shortDesc;
+    private String description;
+    private String videoUrl;
+    private String thumbUrl;
+    private static String stepString;
 
-    public void setId(int newId) {id = newId;}
+    public void setId(String newId) {id = newId;}
     public void setShortDesc(String newShort) {shortDesc = newShort;}
     public void setDescription(String newDesc) {description = newDesc;}
     public void setVideoUrl(String newVideo) {videoUrl = newVideo;}
     public void setThumbUrl(String newThumb) {thumbUrl = newThumb;}
+    public static void setStepString(String newStepString){stepString = newStepString;}
 
-    public static int getId(){return id;}
-    public static String getShortDesc() {return shortDesc;}
-    public static String getDescription() {return description;}
-    public static String getVideoUrl() {return videoUrl;}
-    public static String getThumbUrl() {return thumbUrl;}
+    public String getId(){return id;}
+    public String getShortDesc() {return shortDesc;}
+    public String getDescription() {return description;}
+    public String getVideoUrl() {return videoUrl;}
+    public String getThumbUrl() {return thumbUrl;}
+    public static String getStepString(){return stepString;}
 }
 

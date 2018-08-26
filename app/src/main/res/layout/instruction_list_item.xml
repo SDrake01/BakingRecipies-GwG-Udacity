@@ -3,8 +3,14 @@
     android:id="@+id/ll_instruction_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="4dp"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:paddingBottom="2dp">
 
     <TextView
         android:id="@+id/tv_instruction_list_step_number"
@@ -12,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/step_number"
-        android:textSize="24sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_instruction_list_description"

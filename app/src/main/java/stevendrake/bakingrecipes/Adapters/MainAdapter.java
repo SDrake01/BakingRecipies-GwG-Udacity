@@ -16,6 +16,7 @@ import java.util.List;
 
 import stevendrake.bakingrecipes.Data.IngredientObject;
 import stevendrake.bakingrecipes.Data.RecipeObject;
+import stevendrake.bakingrecipes.Data.StepObject;
 import stevendrake.bakingrecipes.R;
 import stevendrake.bakingrecipes.UI.RecipeActivity;
 import stevendrake.bakingrecipes.Utilities.ParseIngredientsJson;
@@ -85,6 +86,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.RecipeViewHold
                 Context context = v.getContext();
                 Intent recipeIntent = new Intent(context, RecipeActivity.class);
                 IngredientObject.setIngredientString(recipeObjectList.get(position).getIngredients());
+                StepObject.setStepString(recipeObjectList.get(position).getSteps());
+                RecipeObject.setTitle(recipeObjectList.get(position).getName());
                 context.startActivity(recipeIntent);
             }
         }

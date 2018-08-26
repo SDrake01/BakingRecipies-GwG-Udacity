@@ -11,6 +11,7 @@ import java.util.List;
 import stevendrake.bakingrecipes.Data.IngredientObject;
 import stevendrake.bakingrecipes.Data.StepObject;
 import stevendrake.bakingrecipes.Utilities.ParseIngredientsJson;
+import stevendrake.bakingrecipes.Utilities.ParseStepsJson;
 
 public class RecipeViewModel extends AndroidViewModel {
 
@@ -37,11 +38,11 @@ public class RecipeViewModel extends AndroidViewModel {
         return viewIngredientList;
     }
 
-    public List<StepObject> getViewStepList() throws JSONException {
-        if (viewStepList == null){
-            // Make this active after the class and method have been created
-            // ParseStepsJson.getStepsData(StepObject.getStepString());
+    public static List<StepObject> getViewStepList() throws JSONException {
+        if (viewStepList != null) {
+            viewStepList.clear();
         }
+        ParseStepsJson.getStepData(StepObject.getStepString());
         return viewStepList;
     }
 }

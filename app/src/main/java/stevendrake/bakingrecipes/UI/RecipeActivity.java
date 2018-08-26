@@ -4,13 +4,12 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import stevendrake.bakingrecipes.Data.RecipeObject;
 import stevendrake.bakingrecipes.R;
-import stevendrake.bakingrecipes.ViewModels.RecipeViewModel;
 
 public class RecipeActivity extends AppCompatActivity {
 
     FragmentManager recipeFragmentManager = getFragmentManager();
-    private RecipeViewModel recipeViewModel;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,5 +22,7 @@ public class RecipeActivity extends AppCompatActivity {
             RecipeFragment recipeFragment = new RecipeFragment();
             recipeFragmentManager.beginTransaction().add(R.id.fl_recipe_fragment_container, recipeFragment).commit();
         }
+
+        getSupportActionBar().setTitle(RecipeObject.getTitle());
     }
 }

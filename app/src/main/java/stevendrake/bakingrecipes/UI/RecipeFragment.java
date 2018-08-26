@@ -12,6 +12,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 
 import stevendrake.bakingrecipes.Adapters.IngredientAdapter;
+import stevendrake.bakingrecipes.Adapters.StepsAdapter;
 import stevendrake.bakingrecipes.R;
 import stevendrake.bakingrecipes.ViewModels.RecipeViewModel;
 
@@ -19,9 +20,12 @@ public class RecipeFragment extends Fragment{
 
     TextView ingredientsListTitle;
     RecyclerView ingredientsListRecycler;
-    Boolean isListVisible = false;
     public static IngredientAdapter ingredientAdapter;
     private static RecyclerView.LayoutManager ingredientLayoutManager;
+
+    RecyclerView stepsListRecycler;
+    public static StepsAdapter stepsAdapter;
+    private static RecyclerView.LayoutManager stepsLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -34,6 +38,12 @@ public class RecipeFragment extends Fragment{
         ingredientAdapter = new IngredientAdapter(this.getActivity());
         ingredientsListRecycler.setAdapter(ingredientAdapter);
 
+        stepsListRecycler = view.findViewById(R.id.rv_steps_card_recycler);
+        stepsLayoutManager = new LinearLayoutManager(this.getActivity());
+        stepsListRecycler.setLayoutManager(stepsLayoutManager);
+        stepsAdapter = new StepsAdapter(this.getActivity());
+        stepsListRecycler.setAdapter(stepsAdapter);
+
         return view;
     }
 
@@ -42,6 +52,7 @@ public class RecipeFragment extends Fragment{
 
         try {
             ingredientAdapter.setIngredients(RecipeViewModel.getViewIngredientList());
+            stepsAdapter.setSteps(RecipeViewModel.getViewStepList());
         } catch (JSONException e) {
             e.printStackTrace();
         }
