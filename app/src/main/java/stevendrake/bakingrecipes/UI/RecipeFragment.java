@@ -27,8 +27,19 @@ public class RecipeFragment extends Fragment{
     public static StepsAdapter stepsAdapter;
     private static RecyclerView.LayoutManager stepsLayoutManager;
 
+    // Variables used to save and restore the state of the ingredients recyclerview
+    // based on if the user has "collapsed" the view or not and to store the title
+    private static final String COLLAPSED = "ingredients_collapsed";
+    private boolean isCollapsed = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+
+        // Set the isCollapsed boolean to the value from the previously saved instance state if there is one
+        if (savedInstanceState != null){
+            isCollapsed = savedInstanceState.getBoolean(COLLAPSED);
+        }
+
         View view = inflater.inflate(R.layout.recipe_details_layout, container, false);
 
         ingredientsListTitle = view.findViewById(R.id.tv_ingredients_card_title);
@@ -44,6 +55,12 @@ public class RecipeFragment extends Fragment{
         stepsAdapter = new StepsAdapter(this.getActivity());
         stepsListRecycler.setAdapter(stepsAdapter);
 
+        // If the isCollapsed variable has been saved as true, update the view items
+        // to show this, otherwise leave the ingredients list visible
+        if (isCollapsed){
+            ingredientCloser();
+        }
+
         return view;
     }
 
@@ -57,17 +74,30 @@ public class RecipeFragment extends Fragment{
             e.printStackTrace();
         }
 
-        ingredientsListTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(ingredientsListRecycler.getVisibility() == View.VISIBLE){
-                    ingredientsListRecycler.setVisibility(View.GONE);
-                    ingredientsListTitle.setText(R.string.ingredients_title_closed);
-                }else {
-                    ingredientsListRecycler.setVisibility(View.VISIBLE);
-                    ingredientsListTitle.setText(R.string.ingredients_title_open);
-                }
+        ingredientsListTitle.setOnClickListener(v -> {
+            if (isCollapsed){
+                ingredientOpener();
+                isCollapsed = false;
+            }else {
+                ingredientCloser();
+                isCollapsed = true;
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle currentState){
+        currentState.putBoolean(COLLAPSED, isCollapsed);
+    }
+
+    // These two methods set the ingredients recycler view visible or gone
+    // when the user clicks on the title in the recipe detail fragment
+    public void ingredientOpener(){
+        ingredientsListRecycler.setVisibility(View.VISIBLE);
+        ingredientsListTitle.setText(R.string.ingredients_title_open);
+    }
+    public void ingredientCloser(){
+        ingredientsListRecycler.setVisibility(View.GONE);
+        ingredientsListTitle.setText(R.string.ingredients_title_closed);
     }
 }

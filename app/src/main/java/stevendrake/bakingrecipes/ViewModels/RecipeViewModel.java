@@ -2,6 +2,8 @@ package stevendrake.bakingrecipes.ViewModels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import org.json.JSONException;
@@ -17,6 +19,7 @@ public class RecipeViewModel extends AndroidViewModel {
 
     private static List<IngredientObject> viewIngredientList;
     private static List<StepObject> viewStepList;
+    private final MutableLiveData<StepObject> selectedStep = new MutableLiveData<StepObject>();
 
     public RecipeViewModel(@NonNull Application application) {
         super(application);
@@ -44,5 +47,13 @@ public class RecipeViewModel extends AndroidViewModel {
         }
         ParseStepsJson.getStepData(StepObject.getStepString());
         return viewStepList;
+    }
+
+    public void setSelectedStep(StepObject stepObject){
+        selectedStep.setValue(stepObject);
+    }
+
+    public LiveData<StepObject> getSelectedStep(){
+        return selectedStep;
     }
 }

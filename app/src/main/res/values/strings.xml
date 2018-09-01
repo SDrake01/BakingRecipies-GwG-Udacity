@@ -9,6 +9,7 @@
     <string name="recipe_measure">Measure</string>
     <string name="recipe_ingredient">Ingredient</string>
     <string name="step_number">Step </string>
+    <string name="step_number_formatted">Step %1$s</string>
     <string name="step_short_desc">Short Description</string>
     <string name="step_description">Description</string>
     <string name="prev_step">Prev Step</string>

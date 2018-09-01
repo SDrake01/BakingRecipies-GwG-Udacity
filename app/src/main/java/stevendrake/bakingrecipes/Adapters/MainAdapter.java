@@ -19,13 +19,11 @@ import stevendrake.bakingrecipes.Data.RecipeObject;
 import stevendrake.bakingrecipes.Data.StepObject;
 import stevendrake.bakingrecipes.R;
 import stevendrake.bakingrecipes.UI.RecipeActivity;
-import stevendrake.bakingrecipes.Utilities.ParseIngredientsJson;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.RecipeViewHolder> {
 
     private Context context;
     public static List<RecipeObject> recipeObjectList;
-    ParseIngredientsJson ingredientsJson = new ParseIngredientsJson();
 
     public MainAdapter(Context context){
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -81,7 +79,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.RecipeViewHold
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            // Place to put instructions to open the next view
             if (position != RecyclerView.NO_POSITION){
                 Context context = v.getContext();
                 Intent recipeIntent = new Intent(context, RecipeActivity.class);

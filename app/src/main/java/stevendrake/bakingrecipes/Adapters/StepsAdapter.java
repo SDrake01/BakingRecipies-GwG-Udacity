@@ -67,7 +67,16 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
             this.context = context;
         }
 
+//        @Override
+//        public void onClick(View view){
+//            int position = getAdapterPosition();
+//            stepsViewModel.setSelectedStep(stepObjectList.get(position));
+//        }
+
         void bind(int position){
+            // Tried to use a formatted string resource for the stepsNumberView text,
+            // but could not get the command to work and gave up. This does work,
+            // but I don't like it.
             stepsNumberView.setText("Step " + stepObjectList.get(position).getId());
             stepsShortDescView.setText(stepObjectList.get(position).getShortDesc());
         }

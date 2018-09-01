@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cl_single_step"
+    android:id="@+id/cl_tablet_step_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <VideoView
-        android:id="@+id/vv_single_step_video"
+        android:id="@+id/vv_tablet_step_video"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="H,16:9"
@@ -14,21 +14,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cv_single_step_instruction_card"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_tablet_step_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:text="@string/step_number"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vv_single_step_video">
+        app:layout_constraintTop_toBottomOf="@+id/vv_tablet_step_video" />
 
-        <include
-            android:id="@+id/inc_single_step_instruction_item"
-            layout="@layout/instruction_list_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/tv_tablet_step_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/step_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tablet_step_title" />
 
 </android.support.constraint.ConstraintLayout>
