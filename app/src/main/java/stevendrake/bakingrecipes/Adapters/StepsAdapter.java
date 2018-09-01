@@ -12,6 +12,7 @@ import java.util.List;
 
 import stevendrake.bakingrecipes.Data.StepObject;
 import stevendrake.bakingrecipes.R;
+import stevendrake.bakingrecipes.UI.RecipeFragment;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
 
@@ -36,6 +37,11 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
     @Override
     public void onBindViewHolder(@NonNull StepsAdapter.StepsViewHolder holder, int position) {
         holder.bind(position);
+        holder.itemView.setOnClickListener(v -> {
+            // This works because I can't instantiate the ViewModel from this adapter
+            // it simply won't let me include 'getActivity()' from this class
+            RecipeFragment.recipeViewModel.setSelectedStep(stepObjectList.get(position));
+        });
     }
 
     public void setSteps(List<StepObject> newStepList){
@@ -66,12 +72,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
 
             this.context = context;
         }
-
-//        @Override
-//        public void onClick(View view){
-//            int position = getAdapterPosition();
-//            stepsViewModel.setSelectedStep(stepObjectList.get(position));
-//        }
 
         void bind(int position){
             // Tried to use a formatted string resource for the stepsNumberView text,

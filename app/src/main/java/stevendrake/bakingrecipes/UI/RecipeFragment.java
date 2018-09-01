@@ -1,6 +1,7 @@
 package stevendrake.bakingrecipes.UI;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +33,8 @@ public class RecipeFragment extends Fragment{
     private static final String COLLAPSED = "ingredients_collapsed";
     private boolean isCollapsed = false;
 
+    public static RecipeViewModel recipeViewModel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
@@ -54,6 +57,8 @@ public class RecipeFragment extends Fragment{
         stepsListRecycler.setLayoutManager(stepsLayoutManager);
         stepsAdapter = new StepsAdapter(this.getActivity());
         stepsListRecycler.setAdapter(stepsAdapter);
+
+        recipeViewModel = ViewModelProviders.of(getActivity()).get(RecipeViewModel.class);
 
         // If the isCollapsed variable has been saved as true, update the view items
         // to show this, otherwise leave the ingredients list visible
