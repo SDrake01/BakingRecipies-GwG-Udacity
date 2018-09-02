@@ -22,6 +22,8 @@ public class TabletStepsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
         View view = inflater.inflate(R.layout.tablet_step_layout, container, false);
+
+        // Still need to setup the Video View with ExoPlayer
         stepDescription = view.findViewById(R.id.tv_tablet_step_description);
         tabletViewModel = ViewModelProviders.of(getActivity()).get(RecipeViewModel.class);
 
@@ -29,6 +31,7 @@ public class TabletStepsFragment extends Fragment {
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState){
+        // Need to add the ExoPlayer code to this observer
         tabletViewModel.getSelectedStep().observe(this, stepObject -> stepDescription.setText(stepObject.getDescription()));
     }
 }

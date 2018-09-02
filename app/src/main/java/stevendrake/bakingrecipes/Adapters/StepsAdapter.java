@@ -17,6 +17,7 @@ import stevendrake.bakingrecipes.UI.RecipeFragment;
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
 
     public static List<StepObject> stepObjectList;
+    RecipeFragment fragmentTunnel = new RecipeFragment();
 
     public StepsAdapter(Context context){
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -41,6 +42,11 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
             // This works because I can't instantiate the ViewModel from this adapter
             // it simply won't let me include 'getActivity()' from this class
             RecipeFragment.recipeViewModel.setSelectedStep(stepObjectList.get(position));
+            // I hope this will work with the RecipeActivity overriding the showStep method
+            // We'll see tomorrow morning -- nope, null pointer exception line 46
+            // RecipeFragment.selected.showStep();
+            // I tried creating a new instance of the fragment above, but got the same error
+            // fragmentTunnel.selected.showStep(); = null pointer exception
         });
     }
 
