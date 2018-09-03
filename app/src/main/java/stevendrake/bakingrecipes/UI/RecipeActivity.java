@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import stevendrake.bakingrecipes.Data.RecipeObject;
 import stevendrake.bakingrecipes.R;
 
-public class RecipeActivity extends AppCompatActivity implements RecipeFragment.StepSelected {
+public class RecipeActivity extends AppCompatActivity {
 
     public static boolean twoPane;
     FragmentManager recipeFragmentManager = getSupportFragmentManager();
@@ -24,7 +24,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeFragment.
         if (savedInstanceState == null) {
             if (findViewById(R.id.fl_recipe_fragment_container) != null) {
                 recipeFragmentManager.beginTransaction()
-                        .add(R.id.fl_recipe_fragment_container, recipeFragment)
+                        .replace(R.id.fl_recipe_fragment_container, recipeFragment)
                         .commit();
             }
         }
@@ -34,8 +34,9 @@ public class RecipeActivity extends AppCompatActivity implements RecipeFragment.
         if (findViewById(R.id.fl_tablet_steps_container) != null){
             twoPane = true;
             TabletStepsFragment stepsFragment = new TabletStepsFragment();
+            stepsFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             stepsFragmentManager.beginTransaction()
-                    .add(R.id.fl_tablet_steps_container, stepsFragment)
+                    .replace(R.id.fl_tablet_steps_container, stepsFragment)
                     // Adding this sets the landscape 'twoPane' view correctly as master/detail
                     // and retains the correct progress 'step' from the ViewModel
                     .replace(R.id.fl_recipe_fragment_container, recipeFragment)
@@ -46,17 +47,5 @@ public class RecipeActivity extends AppCompatActivity implements RecipeFragment.
 
         // Set the title in the actionBar to the recipe name
         getSupportActionBar().setTitle(RecipeObject.getTitle());
-    }
-
-    @Override
-    public void showStep() {
-        // This is where it will decide whether or not to replace
-        // the RecipeFragment with the PhoneStepsFragment
-        if (!twoPane){
-            PhoneStepsFragment phoneFragment = new PhoneStepsFragment();
-            recipeFragmentManager.beginTransaction()
-                    .replace(R.id.fl_recipe_fragment_container, phoneFragment)
-                    .commit();
-        }
     }
 }

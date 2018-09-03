@@ -34,7 +34,6 @@ public class RecipeFragment extends Fragment{
     private boolean isCollapsed = false;
 
     public static RecipeViewModel recipeViewModel;
-    public static StepSelected selected;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -105,11 +104,5 @@ public class RecipeFragment extends Fragment{
     public void ingredientCloser(){
         ingredientsListRecycler.setVisibility(View.GONE);
         ingredientsListTitle.setText(R.string.ingredients_title_closed);
-    }
-
-    // This interface is used to tell the RecipeActivity when an instruction
-    // step has been selected. The activity will decide what to do then.
-    public interface StepSelected{
-        public void showStep();
     }
 }
