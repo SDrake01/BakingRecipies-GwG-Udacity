@@ -1,11 +1,13 @@
 package stevendrake.bakingrecipes.UI;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import stevendrake.bakingrecipes.Data.RecipeObject;
 import stevendrake.bakingrecipes.R;
+import stevendrake.bakingrecipes.ViewModels.RecipeViewModel;
 
 public class RecipeActivity extends AppCompatActivity {
 
@@ -14,10 +16,13 @@ public class RecipeActivity extends AppCompatActivity {
     FragmentManager stepsFragmentManager = getSupportFragmentManager();
 
     RecipeFragment recipeFragment = new RecipeFragment();
+    RecipeViewModel recipeViewModel;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+
+        recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
 
         // Add the recipe ingredients and instructions fragment if they are not already
         // being displayed (as in an orientation change)
@@ -37,9 +42,6 @@ public class RecipeActivity extends AppCompatActivity {
             stepsFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             stepsFragmentManager.beginTransaction()
                     .replace(R.id.fl_tablet_steps_container, stepsFragment)
-                    // Adding this sets the landscape 'twoPane' view correctly as master/detail
-                    // and retains the correct progress 'step' from the ViewModel
-                    .replace(R.id.fl_recipe_fragment_container, recipeFragment)
                     .commit();
         } else {
             twoPane = false;

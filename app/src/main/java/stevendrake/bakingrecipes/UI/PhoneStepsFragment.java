@@ -1,6 +1,7 @@
 package stevendrake.bakingrecipes.UI;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -59,6 +60,16 @@ public class PhoneStepsFragment extends Fragment implements View.OnClickListener
                 limitButtons(thisStep);
                 break;
         }
+    }
+
+    public void onPause(){
+        // This is to reset the view model selected step to the beginning if the user
+        // navigates back to the recipe list using the back button, but not if the user
+        // rotates the screen to the landscape view on a tablet
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            phoneViewModel.updateSelectedStep(0);
+        }
+        super.onPause();
     }
 
     // This method will remove the prev step button at step 0

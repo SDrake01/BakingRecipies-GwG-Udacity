@@ -3,6 +3,7 @@
     <string name="recipe_title">Recipe</string>
     <string name="ingredients_title_open">Ingredients \n <small>(click to collapse)</small></string>
     <string name="ingredients_title_closed">Ingredients \n <small>(click to open)</small></string>
+    <string name="ingredients_title">Ingredients</string>
     <string name="steps_title">Instructions</string>
     <string name="recipe_name">Recipe Name</string>
     <string name="recipe_quantity">Quantity</string>
