@@ -20,6 +20,8 @@ public class RecipeViewModel extends AndroidViewModel {
     private static List<IngredientObject> viewIngredientList;
     private static List<StepObject> viewStepList;
     private final MutableLiveData<StepObject> selectedStep = new MutableLiveData<StepObject>();
+    private static int listPosition;
+    private static int listLength;
 
     public RecipeViewModel(@NonNull Application application) {
         super(application);
@@ -49,11 +51,28 @@ public class RecipeViewModel extends AndroidViewModel {
         return viewStepList;
     }
 
+    public static void setListPosition(int newListPosition){
+        listPosition = newListPosition;
+    }
+
+    public static int getListPosition(){return listPosition;}
+
     public void setSelectedStep(StepObject stepObject){
         selectedStep.setValue(stepObject);
     }
 
     public LiveData<StepObject> getSelectedStep(){
         return selectedStep;
+    }
+
+    public void updateSelectedStep(int newPosition){
+        listPosition = newPosition;
+        StepObject newStep = viewStepList.get(newPosition);
+        setSelectedStep(newStep);
+    }
+
+    public static int getListLength(){
+        listLength = viewStepList.size();
+        return listLength;
     }
 }

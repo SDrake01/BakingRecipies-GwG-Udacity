@@ -1,5 +1,6 @@
 package stevendrake.bakingrecipes.Adapters;
 
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +13,15 @@ import java.util.List;
 
 import stevendrake.bakingrecipes.Data.StepObject;
 import stevendrake.bakingrecipes.R;
+import stevendrake.bakingrecipes.UI.PhoneStepsFragment;
+import stevendrake.bakingrecipes.UI.RecipeActivity;
 import stevendrake.bakingrecipes.UI.RecipeFragment;
+import stevendrake.bakingrecipes.ViewModels.RecipeViewModel;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
 
     public static List<StepObject> stepObjectList;
-    RecipeFragment fragmentTunnel = new RecipeFragment();
+    RecipeActivity tunnelActivity;
 
     public StepsAdapter(Context context){
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -32,6 +36,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
         LayoutInflater holderInflater = LayoutInflater.from(holderContext);
         View holderView = holderInflater.inflate(stepCardLayoutId, parent, false);
 
+        tunnelActivity = (RecipeActivity)holderContext;
+
         return new StepsViewHolder(holderContext, holderView);
     }
 
@@ -42,11 +48,17 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
             // This works because I can't instantiate the ViewModel from this adapter
             // it simply won't let me include 'getActivity()' from this class
             RecipeFragment.recipeViewModel.setSelectedStep(stepObjectList.get(position));
-            // I hope this will work with the RecipeActivity overriding the showStep method
-            // We'll see tomorrow morning -- nope, null pointer exception line 46
-            // RecipeFragment.selected.showStep();
-            // I tried creating a new instance of the fragment above, but got the same error
-            // fragmentTunnel.selected.showStep(); = null pointer exception
+            // Populate the position number in the view model so the PhoneStepsFragment buttons work
+            RecipeViewModel.setListPosition(position);
+            // Check if the device is in portrait mode (onePane) and if so, replace
+            // the visible fragment with the PhoneStepsFragment so the selected step is shown
+            if (!RecipeActivity.twoPane){
+                PhoneStepsFragment newPhoneFragment = new PhoneStepsFragment();
+                FragmentTransaction transaction = tunnelActivity.getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fl_recipe_fragment_container, newPhoneFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
         });
     }
 

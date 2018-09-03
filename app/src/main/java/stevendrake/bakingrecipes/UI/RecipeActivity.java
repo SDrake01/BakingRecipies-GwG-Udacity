@@ -9,9 +9,11 @@ import stevendrake.bakingrecipes.R;
 
 public class RecipeActivity extends AppCompatActivity implements RecipeFragment.StepSelected {
 
-    boolean twoPane;
+    public static boolean twoPane;
     FragmentManager recipeFragmentManager = getSupportFragmentManager();
     FragmentManager stepsFragmentManager = getSupportFragmentManager();
+
+    RecipeFragment recipeFragment = new RecipeFragment();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +23,6 @@ public class RecipeActivity extends AppCompatActivity implements RecipeFragment.
         // being displayed (as in an orientation change)
         if (savedInstanceState == null) {
             if (findViewById(R.id.fl_recipe_fragment_container) != null) {
-                RecipeFragment recipeFragment = new RecipeFragment();
                 recipeFragmentManager.beginTransaction()
                         .add(R.id.fl_recipe_fragment_container, recipeFragment)
                         .commit();
@@ -35,6 +36,9 @@ public class RecipeActivity extends AppCompatActivity implements RecipeFragment.
             TabletStepsFragment stepsFragment = new TabletStepsFragment();
             stepsFragmentManager.beginTransaction()
                     .add(R.id.fl_tablet_steps_container, stepsFragment)
+                    // Adding this sets the landscape 'twoPane' view correctly as master/detail
+                    // and retains the correct progress 'step' from the ViewModel
+                    .replace(R.id.fl_recipe_fragment_container, recipeFragment)
                     .commit();
         } else {
             twoPane = false;
@@ -52,7 +56,6 @@ public class RecipeActivity extends AppCompatActivity implements RecipeFragment.
             PhoneStepsFragment phoneFragment = new PhoneStepsFragment();
             recipeFragmentManager.beginTransaction()
                     .replace(R.id.fl_recipe_fragment_container, phoneFragment)
-                    .addToBackStack(null)
                     .commit();
         }
     }

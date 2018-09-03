@@ -13,13 +13,14 @@ import android.widget.VideoView;
 import stevendrake.bakingrecipes.R;
 import stevendrake.bakingrecipes.ViewModels.RecipeViewModel;
 
-public class PhoneStepsFragment extends Fragment {
+public class PhoneStepsFragment extends Fragment implements View.OnClickListener {
 
     VideoView stepVideo;
     TextView stepDescription;
     RecipeViewModel phoneViewModel;
-    Button btnBack;
-    Button btnNext;
+    public Button btnBack;
+    public Button btnNext;
+    int thisStep = RecipeViewModel.getListPosition();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -30,7 +31,9 @@ public class PhoneStepsFragment extends Fragment {
         stepDescription = view.findViewById(R.id.tv_phone_step_description);
         phoneViewModel = ViewModelProviders.of(getActivity()).get(RecipeViewModel.class);
         btnBack = view.findViewById(R.id.btn_instruction_prev);
+        btnBack.setOnClickListener(this);
         btnNext = view.findViewById(R.id.btn_instruction_next);
+        btnNext.setOnClickListener(this);
 
         return view;
     }
@@ -39,5 +42,35 @@ public class PhoneStepsFragment extends Fragment {
 
         // Need to add video player code to this observer
         phoneViewModel.getSelectedStep().observe(this, stepObject -> stepDescription.setText(stepObject.getDescription()));
+        limitButtons(thisStep);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_instruction_prev:
+                phoneViewModel.updateSelectedStep(thisStep - 1);
+                thisStep = RecipeViewModel.getListPosition();
+                limitButtons(thisStep);
+                break;
+            case R.id.btn_instruction_next:
+                phoneViewModel.updateSelectedStep(thisStep + 1);
+                thisStep = RecipeViewModel.getListPosition();
+                limitButtons(thisStep);
+                break;
+        }
+    }
+
+    // This method will remove the prev step button at step 0
+    // and remove the next step button at the last step
+    void limitButtons(int current){
+        if (current < 1){
+            btnBack.setVisibility(View.GONE);
+        } else if (current == RecipeViewModel.getListLength()-1){
+            btnNext.setVisibility(View.GONE);
+        }else {
+            btnBack.setVisibility(View.VISIBLE);
+            btnNext.setVisibility(View.VISIBLE);
+        }
     }
 }
