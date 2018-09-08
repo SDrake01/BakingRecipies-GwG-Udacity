@@ -12,6 +12,7 @@ import java.util.List;
 
 import stevendrake.bakingrecipes.Data.IngredientObject;
 import stevendrake.bakingrecipes.Data.StepObject;
+import stevendrake.bakingrecipes.Player.VideoPlayer;
 import stevendrake.bakingrecipes.Utilities.ParseIngredientsJson;
 import stevendrake.bakingrecipes.Utilities.ParseStepsJson;
 
@@ -22,6 +23,7 @@ public class RecipeViewModel extends AndroidViewModel {
     private final MutableLiveData<StepObject> selectedStep = new MutableLiveData<StepObject>();
     private static int listPosition;
     private static int listLength;
+    private static Long playerPosition;
 
     public RecipeViewModel(@NonNull Application application) {
         super(application);
@@ -74,5 +76,13 @@ public class RecipeViewModel extends AndroidViewModel {
     public static int getListLength(){
         listLength = viewStepList.size();
         return listLength;
+    }
+
+    public static void savePosition(VideoPlayer vPlayer){
+        playerPosition = vPlayer.saveCurrent();
+    }
+
+    public static Long setPosition(){
+        return playerPosition;
     }
 }

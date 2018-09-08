@@ -46,13 +46,15 @@ public class TabletStepsFragment extends Fragment {
                 // Stop the current player (if there is one), and start
                 // the current player if this step has a video
                 if (!stepObject.getVideoUrl().isEmpty()){
-                    tabletPlayer.stopPlayer();
-                    tabletPlayer.setExoPlayer(stepObject.getVideoUrl());
-                    //releasePlayer(recipePlayer);
-                    //initializePlayer(stepObject.getVideoUrl());
+                    if (RecipeViewModel.setPosition()!= null && RecipeViewModel.setPosition() > 1){
+                        tabletPlayer.stopPlayer();
+                        tabletPlayer.setExoPlayerPosition(stepObject.getVideoUrl(), RecipeViewModel.setPosition());
+                    } else {
+                        tabletPlayer.stopPlayer();
+                        tabletPlayer.setExoPlayer(stepObject.getVideoUrl());
+                    }
                 } else {
                     // Add code to show a thumbnail or a placeholder if there is no video URL
-                    //releasePlayer(recipePlayer);
                     tabletPlayer.stopPlayer();
                 }
             }
@@ -62,42 +64,13 @@ public class TabletStepsFragment extends Fragment {
         return view;
     }
 
-    //
-    // Could this be moved to a separate package?
-    //
-    // This method sets up an ExoPlayer using a passed in URL in String format
-//    private void initializePlayer(String newUrl){
-//
-//        recipePlayerView = view.findViewById(R.id.ep_tablet_step_video);
-//        recipePlayerView.requestFocus();
-//
-//        // Create a basic instance of an ExoPlayerFactory
-//        recipePlayer = ExoPlayerFactory.newSimpleInstance(
-//                new DefaultRenderersFactory(getActivity()),
-//                new DefaultTrackSelector(),
-//                new DefaultLoadControl()
-//        );
-//
-//        // Attach the player to the view on the screen
-//        recipePlayerView.setPlayer(recipePlayer);
-//
-//        // This translates the URL string from the JSON to a Uri that ExoPlayer can use
-//        // to play the video
-//        Uri playerUri = Uri.parse(newUrl);
-//        MediaSource playerMediaSource = new ExtractorMediaSource(playerUri,
-//                new DefaultDataSourceFactory(getActivity(),"BakingRecipes"),
-//                new DefaultExtractorsFactory(), null, null);
-//
-//        // Prepare the player using the translated media source and set it to play when ready
-//        recipePlayer.prepare(playerMediaSource, true, false);
-//        recipePlayer.setPlayWhenReady(true);
-//    }
-//
-//    // This method stops any passed in player and releases its resources
-//    private void releasePlayer(SimpleExoPlayer player){
-//        if (player != null) {
-//            player.stop();
-//            player.release();
-//        }
-//    }
+    public void onPause(){
+        super.onPause();
+        RecipeViewModel.savePosition(tabletPlayer);
+    }
+
+    public void onStop(){
+        tabletPlayer.stopPlayer();
+        super.onStop();
+    }
 }

@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import stevendrake.bakingrecipes.Data.RecipeObject;
@@ -57,7 +58,16 @@ public class RecipeActivity extends AppCompatActivity {
             twoPane = false;
         }
 
-        // Set the title in the actionBar to the recipe name
-        getSupportActionBar().setTitle(RecipeObject.getTitle());
+        // Set the title in the actionBar to the recipe name and hide the actionbar when
+        // the device is not a tablet and in landscape mode
+        ActionBar titleBar = getSupportActionBar();
+        titleBar.setTitle(RecipeObject.getTitle());
+        if (!twoPane){
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+                titleBar.hide();
+            } else {
+                titleBar.show();
+            }
+        }
     }
 }

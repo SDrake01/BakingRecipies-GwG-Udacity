@@ -46,16 +46,19 @@ public class PhoneStepsFragment extends Fragment implements View.OnClickListener
 
     public void onViewCreated(View view, Bundle savedInstanceState){
 
-        // Need to add video player code to this observer
-        //phoneViewModel.getSelectedStep().observe(this, stepObject -> stepDescription.setText(stepObject.getDescription()));
         final Observer<StepObject> phoneStepObserver = new Observer<StepObject>() {
             @Override
             public void onChanged(@Nullable StepObject stepObject) {
                 stepDescription.setText(stepObject.getDescription());
                 // setup ExoPlayer video if there is one
                 if (!stepObject.getVideoUrl().isEmpty()){
-                    phonePlayer.stopPlayer();
-                    phonePlayer.setExoPlayer(stepObject.getVideoUrl());
+                    if (RecipeViewModel.setPosition() != null && RecipeViewModel.setPosition() > 1){
+                        phonePlayer.stopPlayer();
+                        phonePlayer.setExoPlayerPosition(stepObject.getVideoUrl(), RecipeViewModel.setPosition());
+                    } else {
+                        phonePlayer.stopPlayer();
+                        phonePlayer.setExoPlayer(stepObject.getVideoUrl());
+                    }
                 } else {
                     phonePlayer.stopPlayer();
                 }
@@ -79,6 +82,17 @@ public class PhoneStepsFragment extends Fragment implements View.OnClickListener
                 limitButtons(thisStep);
                 break;
         }
+    }
+
+    public void onPause(){
+        super.onPause();
+        RecipeViewModel.savePosition(phonePlayer);
+
+    }
+
+    public void onStop(){
+        phonePlayer.stopPlayer();
+        super.onStop();
     }
 
     // This method will remove the prev step button at step 0

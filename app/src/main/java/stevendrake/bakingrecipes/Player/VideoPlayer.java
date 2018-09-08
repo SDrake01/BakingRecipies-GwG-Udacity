@@ -39,6 +39,19 @@ public class VideoPlayer {
         player.setPlayWhenReady(true);
     }
 
+    public void setExoPlayerPosition(String mediaUrl, Long position){
+
+        player = ExoPlayerFactory.newSimpleInstance(
+                new DefaultRenderersFactory(playerContext),
+                new DefaultTrackSelector(),
+                new DefaultLoadControl()
+        );
+        playerView.setPlayer(player);
+        player.prepare(getSource(mediaUrl, playerContext));
+        player.seekTo(position);
+        player.setPlayWhenReady(true);
+    }
+
     MediaSource getSource(String sourceUri, Context context){
 
         Uri parsedUri = Uri.parse(sourceUri);
@@ -53,5 +66,13 @@ public class VideoPlayer {
             player.stop();
             player.release();
         }
+    }
+
+    public Long saveCurrent(){
+        return player.getCurrentPosition();
+    }
+
+    public void setCurrent(Long position){
+        player.seekTo(1226);
     }
 }
