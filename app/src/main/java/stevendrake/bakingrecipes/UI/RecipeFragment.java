@@ -19,6 +19,7 @@ import stevendrake.bakingrecipes.ViewModels.RecipeViewModel;
 
 public class RecipeFragment extends Fragment{
 
+    View view;
     TextView ingredientsListTitle;
     RecyclerView ingredientsListRecycler;
     public static IngredientAdapter ingredientAdapter;
@@ -43,7 +44,7 @@ public class RecipeFragment extends Fragment{
             isCollapsed = savedInstanceState.getBoolean(COLLAPSED);
         }
 
-        View view = inflater.inflate(R.layout.recipe_details_layout, container, false);
+        view = inflater.inflate(R.layout.recipe_details_layout, container, false);
 
         ingredientsListTitle = view.findViewById(R.id.tv_ingredients_card_title);
         ingredientsListRecycler = view.findViewById(R.id.rv_ingredients_card_recycler);

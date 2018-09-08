@@ -1,8 +1,8 @@
 package stevendrake.bakingrecipes.Adapters;
 
-import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +16,6 @@ import stevendrake.bakingrecipes.R;
 import stevendrake.bakingrecipes.UI.PhoneStepsFragment;
 import stevendrake.bakingrecipes.UI.RecipeActivity;
 import stevendrake.bakingrecipes.UI.RecipeFragment;
-import stevendrake.bakingrecipes.ViewModels.RecipeViewModel;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
 
@@ -47,9 +46,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
         holder.itemView.setOnClickListener(v -> {
             // This works because I can't instantiate the ViewModel from this adapter
             // it simply won't let me include 'getActivity()' from this class
-            RecipeFragment.recipeViewModel.setSelectedStep(stepObjectList.get(position));
-            // Populate the position number in the view model so the PhoneStepsFragment buttons work
-            RecipeViewModel.setListPosition(position);
+            RecipeFragment.recipeViewModel.updateSelectedStep(position);
             // Check if the device is in portrait mode (onePane) and if so, replace
             // the visible fragment with the PhoneStepsFragment so the selected step is shown
             if (!RecipeActivity.twoPane){

@@ -19,6 +19,7 @@ import stevendrake.bakingrecipes.Data.RecipeObject;
 import stevendrake.bakingrecipes.Data.StepObject;
 import stevendrake.bakingrecipes.R;
 import stevendrake.bakingrecipes.UI.RecipeActivity;
+import stevendrake.bakingrecipes.ViewModels.RecipeViewModel;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.RecipeViewHolder> {
 
@@ -80,6 +81,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.RecipeViewHold
         public void onClick(View v) {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION){
+                RecipeViewModel.setListPosition(0);
                 Context context = v.getContext();
                 Intent recipeIntent = new Intent(context, RecipeActivity.class);
                 IngredientObject.setIngredientString(recipeObjectList.get(position).getIngredients());
@@ -93,7 +95,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.RecipeViewHold
             recipeCardName.setText(recipeObjectList.get(position).getName());
             if (recipeObjectList.get(position).getImage().trim().length() == 0){
                 Picasso.with(itemView.getContext())
-                        .load(R.mipmap.ic_launcher)
+                        .load(R.drawable.ic_recipes_full)
                         .into(recipeCardImage);
             } else {
                 Picasso.with(itemView.getContext())

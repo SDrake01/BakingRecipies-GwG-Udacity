@@ -11,7 +11,7 @@
     <string name="recipe_ingredient">Ingredient</string>
     <string name="step_number">Step </string>
     <string name="step_short_desc">Short Description</string>
-    <string name="step_description">Start at Step 1 and have fun!</string>
+    <string name="step_description">Have fun!</string>
     <string name="prev_step">Prev Step</string>
     <string name="next_step">Next Step</string>
     <string name="json_url">https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json</string>

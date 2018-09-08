@@ -5,37 +5,40 @@
     android:id="@+id/cv_main_recipe_card_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     tools:layout_editor_absoluteX="8dp"
     tools:layout_editor_absoluteY="8dp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cl_recipe_card_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="4dp">
-
-        <TextView
-            android:id="@+id/tv_recipe_card_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/recipe_name"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_recipe_card_image" />
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/iv_recipe_card_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ic_launcher" />
+            app:srcCompat="@drawable/ic_recipes_full" />
+
+        <TextView
+            android:id="@+id/tv_recipe_card_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/recipe_name"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_recipe_card_image"
+            app:layout_constraintEnd_toEndOf="@+id/iv_recipe_card_image"
+            app:layout_constraintStart_toStartOf="@+id/iv_recipe_card_image"
+            app:layout_constraintTop_toTopOf="@+id/iv_recipe_card_image" />
 
     </android.support.constraint.ConstraintLayout>
 

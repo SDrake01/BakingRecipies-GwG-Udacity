@@ -1,8 +1,9 @@
 package stevendrake.bakingrecipes.UI;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import stevendrake.bakingrecipes.Data.StepObject;
+import stevendrake.bakingrecipes.Player.VideoPlayer;
 import stevendrake.bakingrecipes.R;
 import stevendrake.bakingrecipes.ViewModels.RecipeViewModel;
 
@@ -19,6 +22,7 @@ public class PhoneStepsFragment extends Fragment implements View.OnClickListener
     VideoView stepVideo;
     TextView stepDescription;
     RecipeViewModel phoneViewModel;
+    VideoPlayer phonePlayer;
     public Button btnBack;
     public Button btnNext;
     int thisStep = RecipeViewModel.getListPosition();
@@ -31,6 +35,7 @@ public class PhoneStepsFragment extends Fragment implements View.OnClickListener
         // Still need to setup the video player stuff
         stepDescription = view.findViewById(R.id.tv_phone_step_description);
         phoneViewModel = ViewModelProviders.of(getActivity()).get(RecipeViewModel.class);
+        phonePlayer = new VideoPlayer(getActivity(), view.findViewById(R.id.ep_phone_step_video));
         btnBack = view.findViewById(R.id.btn_instruction_prev);
         btnBack.setOnClickListener(this);
         btnNext = view.findViewById(R.id.btn_instruction_next);
@@ -42,7 +47,21 @@ public class PhoneStepsFragment extends Fragment implements View.OnClickListener
     public void onViewCreated(View view, Bundle savedInstanceState){
 
         // Need to add video player code to this observer
-        phoneViewModel.getSelectedStep().observe(this, stepObject -> stepDescription.setText(stepObject.getDescription()));
+        //phoneViewModel.getSelectedStep().observe(this, stepObject -> stepDescription.setText(stepObject.getDescription()));
+        final Observer<StepObject> phoneStepObserver = new Observer<StepObject>() {
+            @Override
+            public void onChanged(@Nullable StepObject stepObject) {
+                stepDescription.setText(stepObject.getDescription());
+                // setup ExoPlayer video if there is one
+                if (!stepObject.getVideoUrl().isEmpty()){
+                    phonePlayer.stopPlayer();
+                    phonePlayer.setExoPlayer(stepObject.getVideoUrl());
+                } else {
+                    phonePlayer.stopPlayer();
+                }
+            }
+        };
+        phoneViewModel.getSelectedStep().observe(this, phoneStepObserver);
         limitButtons(thisStep);
     }
 
@@ -60,16 +79,6 @@ public class PhoneStepsFragment extends Fragment implements View.OnClickListener
                 limitButtons(thisStep);
                 break;
         }
-    }
-
-    public void onPause(){
-        // This is to reset the view model selected step to the beginning if the user
-        // navigates back to the recipe list using the back button, but not if the user
-        // rotates the screen to the landscape view on a tablet
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            phoneViewModel.updateSelectedStep(0);
-        }
-        super.onPause();
     }
 
     // This method will remove the prev step button at step 0

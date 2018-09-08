@@ -19,9 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentManager mainFragmentManager = getFragmentManager();
     ParseRecipeJson recipeJson = new ParseRecipeJson();
-    // I tried to set the url string as a resource and refer to it, but couldn't get
-    // it to load the recipes that way, so I gave up.
-    String url = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     // the ParseRecipeJson.getRecipeData method to be parsed using the Volley Library.
     public void getRecipeData() {
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(getResources().getString(R.string.json_url), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 recipeJson.getRecipeData(response);
