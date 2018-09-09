@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import stevendrake.bakingrecipes.Data.StepObject;
 import stevendrake.bakingrecipes.Player.VideoPlayer;
@@ -19,7 +18,6 @@ import stevendrake.bakingrecipes.ViewModels.RecipeViewModel;
 
 public class PhoneStepsFragment extends Fragment implements View.OnClickListener {
 
-    VideoView stepVideo;
     TextView stepDescription;
     RecipeViewModel phoneViewModel;
     VideoPlayer phonePlayer;
@@ -52,15 +50,14 @@ public class PhoneStepsFragment extends Fragment implements View.OnClickListener
                 stepDescription.setText(stepObject.getDescription());
                 // setup ExoPlayer video if there is one
                 if (!stepObject.getVideoUrl().isEmpty()){
-                    if (RecipeViewModel.setPosition() != null && RecipeViewModel.setPosition() > 1){
-                        phonePlayer.stopPlayer();
-                        phonePlayer.setExoPlayerPosition(stepObject.getVideoUrl(), RecipeViewModel.setPosition());
-                    } else {
-                        phonePlayer.stopPlayer();
-                        phonePlayer.setExoPlayer(stepObject.getVideoUrl());
-                    }
+                    phonePlayer.unHidePlayer();
+                    startPlayer(phonePlayer, stepObject.getVideoUrl());
+                } else if (!stepObject.getThumbUrl().isEmpty()){
+                    phonePlayer.unHidePlayer();
+                    startPlayer(phonePlayer, stepObject.getThumbUrl());
                 } else {
                     phonePlayer.stopPlayer();
+                    phonePlayer.hidePlayer();
                 }
             }
         };
@@ -72,11 +69,13 @@ public class PhoneStepsFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_instruction_prev:
+                phonePlayer.stopPlayer();
                 phoneViewModel.updateSelectedStep(thisStep - 1);
                 thisStep = RecipeViewModel.getListPosition();
                 limitButtons(thisStep);
                 break;
             case R.id.btn_instruction_next:
+                phonePlayer.stopPlayer();
                 phoneViewModel.updateSelectedStep(thisStep + 1);
                 thisStep = RecipeViewModel.getListPosition();
                 limitButtons(thisStep);
@@ -105,6 +104,16 @@ public class PhoneStepsFragment extends Fragment implements View.OnClickListener
         }else {
             btnBack.setVisibility(View.VISIBLE);
             btnNext.setVisibility(View.VISIBLE);
+        }
+    }
+
+    void startPlayer(VideoPlayer player, String stepUrl){
+        if (RecipeViewModel.setPosition() != null && RecipeViewModel.setPosition() > 1){
+            player.stopPlayer();
+            player.setExoPlayerPosition(stepUrl, RecipeViewModel.setPosition());
+        } else {
+            player.stopPlayer();
+            player.setExoPlayer(stepUrl);
         }
     }
 }

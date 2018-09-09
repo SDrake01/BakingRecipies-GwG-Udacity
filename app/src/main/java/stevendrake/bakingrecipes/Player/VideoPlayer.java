@@ -2,6 +2,7 @@ package stevendrake.bakingrecipes.Player;
 
 import android.content.Context;
 import android.net.Uri;
+import android.view.View;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
@@ -69,10 +70,17 @@ public class VideoPlayer {
     }
 
     public Long saveCurrent(){
-        return player.getCurrentPosition();
+        if (player != null && player.getCurrentPosition() > 1) {
+            return player.getCurrentPosition();
+        }
+        return 0L;
     }
 
-    public void setCurrent(Long position){
-        player.seekTo(1226);
+    public void hidePlayer(){
+        playerView.setVisibility(View.GONE);
+    }
+
+    public void unHidePlayer(){
+        playerView.setVisibility(View.VISIBLE);
     }
 }

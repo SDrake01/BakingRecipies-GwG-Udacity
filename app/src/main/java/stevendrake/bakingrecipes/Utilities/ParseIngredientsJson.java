@@ -22,18 +22,24 @@ public class ParseIngredientsJson {
 
         for (int i = 0; i < ingredientArray.length(); i++){
             IngredientObject ingredientBuilder = new IngredientObject();
-            String widgetLine = new String();
+            String widgetLine;
             try {
                 JSONObject ingredientObject = ingredientArray.getJSONObject(i);
-                ingredientBuilder.setQuantity(ingredientObject.getString("quantity"));
-                ingredientBuilder.setMeasure(ingredientObject.getString("measure"));
-                ingredientBuilder.setIngredient(ingredientObject.getString("ingredient"));
+                // Create strings for each item to be used in the ingredientBuilder and the widgetString
+                String qty = ingredientObject.getString("quantity");
+                String meas = ingredientObject.getString("measure");
+                String ingred = ingredientObject.getString("ingredient");
+                // This block builds the IngredientObject for the recycler view
+                ingredientBuilder.setQuantity(qty);
+                ingredientBuilder.setMeasure(meas);
+                ingredientBuilder.setIngredient(ingred);
                 ingredientList.add(ingredientBuilder);
-                widgetLine = ingredientObject.getString("quantity")
-                        + ingredientObject.getString("measure")
-                        + ingredientObject.getString("ingredient")
-                        + "\n";
+                // This block builds the string used for the widget body text
+                widgetLine = String.format("%1$3s %2$5s %3$s", qty, meas, ingred);
                 widgetString.append(widgetLine);
+                if (i < ingredientArray.length()-1){
+                    widgetString.append("\n");
+                }
             }catch (JSONException j){
                 j.printStackTrace();
             }

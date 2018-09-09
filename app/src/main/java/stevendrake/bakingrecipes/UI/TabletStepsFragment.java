@@ -10,9 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.ui.PlayerView;
-
 import stevendrake.bakingrecipes.Data.StepObject;
 import stevendrake.bakingrecipes.Player.VideoPlayer;
 import stevendrake.bakingrecipes.R;
@@ -23,10 +20,6 @@ public class TabletStepsFragment extends Fragment {
     TextView stepDescription;
     RecipeViewModel tabletViewModel;
     View view;
-    // ExoPlayer variables
-    private PlayerView recipePlayerView;
-    private SimpleExoPlayer recipePlayer;
-    // This VideoPlayer object is from my exoplayer class and replaces the two above
     VideoPlayer tabletPlayer;
 
     @Override
@@ -46,16 +39,14 @@ public class TabletStepsFragment extends Fragment {
                 // Stop the current player (if there is one), and start
                 // the current player if this step has a video
                 if (!stepObject.getVideoUrl().isEmpty()){
-                    if (RecipeViewModel.setPosition()!= null && RecipeViewModel.setPosition() > 1){
-                        tabletPlayer.stopPlayer();
-                        tabletPlayer.setExoPlayerPosition(stepObject.getVideoUrl(), RecipeViewModel.setPosition());
-                    } else {
-                        tabletPlayer.stopPlayer();
-                        tabletPlayer.setExoPlayer(stepObject.getVideoUrl());
-                    }
+                    tabletPlayer.unHidePlayer();
+                    startPlayer(tabletPlayer, stepObject.getVideoUrl());
+                } else if (!stepObject.getThumbUrl().isEmpty()) {
+                    tabletPlayer.unHidePlayer();
+                    startPlayer(tabletPlayer, stepObject.getThumbUrl());
                 } else {
-                    // Add code to show a thumbnail or a placeholder if there is no video URL
                     tabletPlayer.stopPlayer();
+                    tabletPlayer.hidePlayer();
                 }
             }
         };
@@ -72,5 +63,15 @@ public class TabletStepsFragment extends Fragment {
     public void onStop(){
         tabletPlayer.stopPlayer();
         super.onStop();
+    }
+
+    void startPlayer(VideoPlayer player, String stepUrl){
+        if (RecipeViewModel.setPosition() != null && RecipeViewModel.setPosition() > 1){
+            player.stopPlayer();
+            player.setExoPlayerPosition(stepUrl, RecipeViewModel.setPosition());
+        } else {
+            player.stopPlayer();
+            player.setExoPlayer(stepUrl);
+        }
     }
 }
