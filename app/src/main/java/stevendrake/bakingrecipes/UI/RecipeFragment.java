@@ -1,6 +1,9 @@
 package stevendrake.bakingrecipes.UI;
 
+import android.appwidget.AppWidgetManager;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,12 +11,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import org.json.JSONException;
 
 import stevendrake.bakingrecipes.Adapters.IngredientAdapter;
 import stevendrake.bakingrecipes.Adapters.StepsAdapter;
+import stevendrake.bakingrecipes.AppWidget.RecipeWidget;
+import stevendrake.bakingrecipes.Data.WidgetData;
 import stevendrake.bakingrecipes.R;
 import stevendrake.bakingrecipes.ViewModels.RecipeViewModel;
 
@@ -89,6 +95,8 @@ public class RecipeFragment extends Fragment{
                 isCollapsed = true;
             }
         });
+
+        refreshWidget();
     }
 
     @Override
@@ -105,5 +113,15 @@ public class RecipeFragment extends Fragment{
     public void ingredientCloser(){
         ingredientsListRecycler.setVisibility(View.GONE);
         ingredientsListTitle.setText(R.string.ingredients_title_closed);
+    }
+
+    public void refreshWidget(){
+        Context widgetContext = getContext();
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(widgetContext);
+        RemoteViews widgetViews = new RemoteViews(widgetContext.getPackageName(), R.layout.recipe_widget);
+        ComponentName recipeWidget = new ComponentName(widgetContext, RecipeWidget.class);
+        widgetViews.setTextViewText(R.id.tv_app_widget_title, WidgetData.getWidgetTitle());
+        widgetViews.setTextViewText(R.id.tv_app_widget_body, WidgetData.getWidgetIngredients());
+        widgetManager.updateAppWidget(recipeWidget, widgetViews);
     }
 }
